@@ -1,0 +1,617 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B6CFFA2721B7A50B00EDC224 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CFFA2621B7A50B00EDC224 /* AppDelegate.swift */; };
+		B6CFFA2921B7A50B00EDC224 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CFFA2821B7A50B00EDC224 /* ViewController.swift */; };
+		B6CFFA2C21B7A50B00EDC224 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6CFFA2A21B7A50B00EDC224 /* Main.storyboard */; };
+		B6CFFA2E21B7A50C00EDC224 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6CFFA2D21B7A50C00EDC224 /* Assets.xcassets */; };
+		B6CFFA3121B7A50C00EDC224 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6CFFA2F21B7A50C00EDC224 /* LaunchScreen.storyboard */; };
+		B6CFFA3C21B7A50C00EDC224 /* CustomNavPopGestureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CFFA3B21B7A50C00EDC224 /* CustomNavPopGestureTests.swift */; };
+		B6CFFA4721B7A50C00EDC224 /* CustomNavPopGestureUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CFFA4621B7A50C00EDC224 /* CustomNavPopGestureUITests.swift */; };
+		B6CFFA5521B7A6BA00EDC224 /* ViewController1.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CFFA5421B7A6BA00EDC224 /* ViewController1.swift */; };
+		B6CFFA5721B7A74B00EDC224 /* SINBaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CFFA5621B7A74B00EDC224 /* SINBaseNavigationController.swift */; };
+		B6CFFA5921B7C6C300EDC224 /* ViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CFFA5821B7C6C300EDC224 /* ViewController2.swift */; };
+		B6CFFA5B21B7C6CC00EDC224 /* ViewController3.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CFFA5A21B7C6CC00EDC224 /* ViewController3.swift */; };
+		B6CFFA5D21B7E02A00EDC224 /* ViewController4.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CFFA5C21B7E02A00EDC224 /* ViewController4.swift */; };
+		B6CFFA5F21B7E03A00EDC224 /* ViewController5.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CFFA5E21B7E03A00EDC224 /* ViewController5.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B6CFFA3821B7A50C00EDC224 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B6CFFA1B21B7A50A00EDC224 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B6CFFA2221B7A50B00EDC224;
+			remoteInfo = CustomNavPopGesture;
+		};
+		B6CFFA4321B7A50C00EDC224 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B6CFFA1B21B7A50A00EDC224 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B6CFFA2221B7A50B00EDC224;
+			remoteInfo = CustomNavPopGesture;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		B6CFFA2321B7A50B00EDC224 /* CustomNavPopGesture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CustomNavPopGesture.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6CFFA2621B7A50B00EDC224 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B6CFFA2821B7A50B00EDC224 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B6CFFA2B21B7A50B00EDC224 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B6CFFA2D21B7A50C00EDC224 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B6CFFA3021B7A50C00EDC224 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		B6CFFA3221B7A50C00EDC224 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B6CFFA3721B7A50C00EDC224 /* CustomNavPopGestureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CustomNavPopGestureTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6CFFA3B21B7A50C00EDC224 /* CustomNavPopGestureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavPopGestureTests.swift; sourceTree = "<group>"; };
+		B6CFFA3D21B7A50C00EDC224 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B6CFFA4221B7A50C00EDC224 /* CustomNavPopGestureUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CustomNavPopGestureUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6CFFA4621B7A50C00EDC224 /* CustomNavPopGestureUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavPopGestureUITests.swift; sourceTree = "<group>"; };
+		B6CFFA4821B7A50C00EDC224 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B6CFFA5421B7A6BA00EDC224 /* ViewController1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController1.swift; sourceTree = "<group>"; };
+		B6CFFA5621B7A74B00EDC224 /* SINBaseNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SINBaseNavigationController.swift; sourceTree = "<group>"; };
+		B6CFFA5821B7C6C300EDC224 /* ViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController2.swift; sourceTree = "<group>"; };
+		B6CFFA5A21B7C6CC00EDC224 /* ViewController3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController3.swift; sourceTree = "<group>"; };
+		B6CFFA5C21B7E02A00EDC224 /* ViewController4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController4.swift; sourceTree = "<group>"; };
+		B6CFFA5E21B7E03A00EDC224 /* ViewController5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController5.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B6CFFA2021B7A50B00EDC224 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B6CFFA3421B7A50C00EDC224 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B6CFFA3F21B7A50C00EDC224 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B6CFFA1A21B7A50A00EDC224 = {
+			isa = PBXGroup;
+			children = (
+				B6CFFA2521B7A50B00EDC224 /* CustomNavPopGesture */,
+				B6CFFA3A21B7A50C00EDC224 /* CustomNavPopGestureTests */,
+				B6CFFA4521B7A50C00EDC224 /* CustomNavPopGestureUITests */,
+				B6CFFA2421B7A50B00EDC224 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B6CFFA2421B7A50B00EDC224 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B6CFFA2321B7A50B00EDC224 /* CustomNavPopGesture.app */,
+				B6CFFA3721B7A50C00EDC224 /* CustomNavPopGestureTests.xctest */,
+				B6CFFA4221B7A50C00EDC224 /* CustomNavPopGestureUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B6CFFA2521B7A50B00EDC224 /* CustomNavPopGesture */ = {
+			isa = PBXGroup;
+			children = (
+				B6CFFA2621B7A50B00EDC224 /* AppDelegate.swift */,
+				B6CFFA2821B7A50B00EDC224 /* ViewController.swift */,
+				B6CFFA5421B7A6BA00EDC224 /* ViewController1.swift */,
+				B6CFFA5821B7C6C300EDC224 /* ViewController2.swift */,
+				B6CFFA5A21B7C6CC00EDC224 /* ViewController3.swift */,
+				B6CFFA5C21B7E02A00EDC224 /* ViewController4.swift */,
+				B6CFFA5E21B7E03A00EDC224 /* ViewController5.swift */,
+				B6CFFA5621B7A74B00EDC224 /* SINBaseNavigationController.swift */,
+				B6CFFA2A21B7A50B00EDC224 /* Main.storyboard */,
+				B6CFFA2D21B7A50C00EDC224 /* Assets.xcassets */,
+				B6CFFA2F21B7A50C00EDC224 /* LaunchScreen.storyboard */,
+				B6CFFA3221B7A50C00EDC224 /* Info.plist */,
+			);
+			path = CustomNavPopGesture;
+			sourceTree = "<group>";
+		};
+		B6CFFA3A21B7A50C00EDC224 /* CustomNavPopGestureTests */ = {
+			isa = PBXGroup;
+			children = (
+				B6CFFA3B21B7A50C00EDC224 /* CustomNavPopGestureTests.swift */,
+				B6CFFA3D21B7A50C00EDC224 /* Info.plist */,
+			);
+			path = CustomNavPopGestureTests;
+			sourceTree = "<group>";
+		};
+		B6CFFA4521B7A50C00EDC224 /* CustomNavPopGestureUITests */ = {
+			isa = PBXGroup;
+			children = (
+				B6CFFA4621B7A50C00EDC224 /* CustomNavPopGestureUITests.swift */,
+				B6CFFA4821B7A50C00EDC224 /* Info.plist */,
+			);
+			path = CustomNavPopGestureUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B6CFFA2221B7A50B00EDC224 /* CustomNavPopGesture */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B6CFFA4B21B7A50C00EDC224 /* Build configuration list for PBXNativeTarget "CustomNavPopGesture" */;
+			buildPhases = (
+				B6CFFA1F21B7A50B00EDC224 /* Sources */,
+				B6CFFA2021B7A50B00EDC224 /* Frameworks */,
+				B6CFFA2121B7A50B00EDC224 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CustomNavPopGesture;
+			productName = CustomNavPopGesture;
+			productReference = B6CFFA2321B7A50B00EDC224 /* CustomNavPopGesture.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B6CFFA3621B7A50C00EDC224 /* CustomNavPopGestureTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B6CFFA4E21B7A50C00EDC224 /* Build configuration list for PBXNativeTarget "CustomNavPopGestureTests" */;
+			buildPhases = (
+				B6CFFA3321B7A50C00EDC224 /* Sources */,
+				B6CFFA3421B7A50C00EDC224 /* Frameworks */,
+				B6CFFA3521B7A50C00EDC224 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B6CFFA3921B7A50C00EDC224 /* PBXTargetDependency */,
+			);
+			name = CustomNavPopGestureTests;
+			productName = CustomNavPopGestureTests;
+			productReference = B6CFFA3721B7A50C00EDC224 /* CustomNavPopGestureTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B6CFFA4121B7A50C00EDC224 /* CustomNavPopGestureUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B6CFFA5121B7A50C00EDC224 /* Build configuration list for PBXNativeTarget "CustomNavPopGestureUITests" */;
+			buildPhases = (
+				B6CFFA3E21B7A50C00EDC224 /* Sources */,
+				B6CFFA3F21B7A50C00EDC224 /* Frameworks */,
+				B6CFFA4021B7A50C00EDC224 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B6CFFA4421B7A50C00EDC224 /* PBXTargetDependency */,
+			);
+			name = CustomNavPopGestureUITests;
+			productName = CustomNavPopGestureUITests;
+			productReference = B6CFFA4221B7A50C00EDC224 /* CustomNavPopGestureUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B6CFFA1B21B7A50A00EDC224 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1010;
+				LastUpgradeCheck = 1010;
+				ORGANIZATIONNAME = sohu;
+				TargetAttributes = {
+					B6CFFA2221B7A50B00EDC224 = {
+						CreatedOnToolsVersion = 10.1;
+					};
+					B6CFFA3621B7A50C00EDC224 = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = B6CFFA2221B7A50B00EDC224;
+					};
+					B6CFFA4121B7A50C00EDC224 = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = B6CFFA2221B7A50B00EDC224;
+					};
+				};
+			};
+			buildConfigurationList = B6CFFA1E21B7A50A00EDC224 /* Build configuration list for PBXProject "CustomNavPopGesture" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B6CFFA1A21B7A50A00EDC224;
+			productRefGroup = B6CFFA2421B7A50B00EDC224 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B6CFFA2221B7A50B00EDC224 /* CustomNavPopGesture */,
+				B6CFFA3621B7A50C00EDC224 /* CustomNavPopGestureTests */,
+				B6CFFA4121B7A50C00EDC224 /* CustomNavPopGestureUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B6CFFA2121B7A50B00EDC224 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B6CFFA3121B7A50C00EDC224 /* LaunchScreen.storyboard in Resources */,
+				B6CFFA2E21B7A50C00EDC224 /* Assets.xcassets in Resources */,
+				B6CFFA2C21B7A50B00EDC224 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B6CFFA3521B7A50C00EDC224 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B6CFFA4021B7A50C00EDC224 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B6CFFA1F21B7A50B00EDC224 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B6CFFA5921B7C6C300EDC224 /* ViewController2.swift in Sources */,
+				B6CFFA5D21B7E02A00EDC224 /* ViewController4.swift in Sources */,
+				B6CFFA5521B7A6BA00EDC224 /* ViewController1.swift in Sources */,
+				B6CFFA5B21B7C6CC00EDC224 /* ViewController3.swift in Sources */,
+				B6CFFA5F21B7E03A00EDC224 /* ViewController5.swift in Sources */,
+				B6CFFA2921B7A50B00EDC224 /* ViewController.swift in Sources */,
+				B6CFFA2721B7A50B00EDC224 /* AppDelegate.swift in Sources */,
+				B6CFFA5721B7A74B00EDC224 /* SINBaseNavigationController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B6CFFA3321B7A50C00EDC224 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B6CFFA3C21B7A50C00EDC224 /* CustomNavPopGestureTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B6CFFA3E21B7A50C00EDC224 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B6CFFA4721B7A50C00EDC224 /* CustomNavPopGestureUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B6CFFA3921B7A50C00EDC224 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B6CFFA2221B7A50B00EDC224 /* CustomNavPopGesture */;
+			targetProxy = B6CFFA3821B7A50C00EDC224 /* PBXContainerItemProxy */;
+		};
+		B6CFFA4421B7A50C00EDC224 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B6CFFA2221B7A50B00EDC224 /* CustomNavPopGesture */;
+			targetProxy = B6CFFA4321B7A50C00EDC224 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		B6CFFA2A21B7A50B00EDC224 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B6CFFA2B21B7A50B00EDC224 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		B6CFFA2F21B7A50C00EDC224 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B6CFFA3021B7A50C00EDC224 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B6CFFA4921B7A50C00EDC224 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		B6CFFA4A21B7A50C00EDC224 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B6CFFA4C21B7A50C00EDC224 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = SQDU4YLT33;
+				INFOPLIST_FILE = CustomNavPopGesture/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.CustomNavPopGesture;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B6CFFA4D21B7A50C00EDC224 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = SQDU4YLT33;
+				INFOPLIST_FILE = CustomNavPopGesture/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.CustomNavPopGesture;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		B6CFFA4F21B7A50C00EDC224 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = SQDU4YLT33;
+				INFOPLIST_FILE = CustomNavPopGestureTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.CustomNavPopGestureTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CustomNavPopGesture.app/CustomNavPopGesture";
+			};
+			name = Debug;
+		};
+		B6CFFA5021B7A50C00EDC224 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = SQDU4YLT33;
+				INFOPLIST_FILE = CustomNavPopGestureTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.CustomNavPopGestureTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CustomNavPopGesture.app/CustomNavPopGesture";
+			};
+			name = Release;
+		};
+		B6CFFA5221B7A50C00EDC224 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = SQDU4YLT33;
+				INFOPLIST_FILE = CustomNavPopGestureUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.CustomNavPopGestureUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = CustomNavPopGesture;
+			};
+			name = Debug;
+		};
+		B6CFFA5321B7A50C00EDC224 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = SQDU4YLT33;
+				INFOPLIST_FILE = CustomNavPopGestureUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.CustomNavPopGestureUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = CustomNavPopGesture;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B6CFFA1E21B7A50A00EDC224 /* Build configuration list for PBXProject "CustomNavPopGesture" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B6CFFA4921B7A50C00EDC224 /* Debug */,
+				B6CFFA4A21B7A50C00EDC224 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B6CFFA4B21B7A50C00EDC224 /* Build configuration list for PBXNativeTarget "CustomNavPopGesture" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B6CFFA4C21B7A50C00EDC224 /* Debug */,
+				B6CFFA4D21B7A50C00EDC224 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B6CFFA4E21B7A50C00EDC224 /* Build configuration list for PBXNativeTarget "CustomNavPopGestureTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B6CFFA4F21B7A50C00EDC224 /* Debug */,
+				B6CFFA5021B7A50C00EDC224 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B6CFFA5121B7A50C00EDC224 /* Build configuration list for PBXNativeTarget "CustomNavPopGestureUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B6CFFA5221B7A50C00EDC224 /* Debug */,
+				B6CFFA5321B7A50C00EDC224 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B6CFFA1B21B7A50A00EDC224 /* Project object */;
+}
