@@ -30,7 +30,7 @@ class SINBaseNavigationController: UINavigationController {
         let absX = abs(point.x)
         let absY = abs(point.y)
         
-        if absX >= absY && point.x > 0 {
+        if absX >= absY {
             return true
         }
         
@@ -49,7 +49,7 @@ class SINBaseNavigationController: UINavigationController {
         super.viewDidLoad()
         
         self.navigationBar.isHidden = true
-
+        self.view.backgroundColor = UIColor.cyan
 //        self.interactivePopGestureRecognizer!.delegate = nil
         
         self.delegate = self
@@ -324,8 +324,6 @@ class DriveInteractiveTransition: UIPercentDrivenInteractiveTransition {
     
     override func startInteractiveTransition(_ transitionContext: UIViewControllerContextTransitioning) {
         super.startInteractiveTransition(transitionContext)
-        completionSpeed = (1 - percentComplete)*duration
-        completionCurve = .easeIn
     }
     
     @objc private func panForInteractiveTransition(_ pan: UIPanGestureRecognizer) {
@@ -334,17 +332,20 @@ class DriveInteractiveTransition: UIPercentDrivenInteractiveTransition {
 //        print("percentComplete : \(percentComplete)")
         print("scale : \(scale)")
         switch pan.state {
-        case .began, .possible, .changed:
+        case .changed:
             update(scale)
-        case .ended:
+        case .ended, .failed, .cancelled:
             
-            if scale < 0.3 {
+            if scale <= 0.3 {
+                completionSpeed = (1 - percentComplete)*duration
+                completionCurve = .linear
                 cancel()
             }else {
                 completionSpeed = 0.7
+                completionCurve = .easeIn
                 finish()
             }
-
+            
         default:
             break
         }
