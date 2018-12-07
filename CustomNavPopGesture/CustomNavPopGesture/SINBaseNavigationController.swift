@@ -41,8 +41,8 @@ class SINBaseNavigationController: UINavigationController {
     private var snapshopView: UIView?
     
     private lazy var interactiveTransition: DriveInteractiveTransition = {
-        let transition = DriveInteractiveTransition(fullSreenPanGesture)
-        return transition
+        let driveTransition = DriveInteractiveTransition(fullSreenPanGesture)
+        return driveTransition
     }()
     
     deinit {
@@ -156,11 +156,11 @@ extension SINBaseNavigationController: UINavigationControllerDelegate {
     
     func navigationController(_ navigationController: UINavigationController, interactionControllerFor animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
         
-        guard let _ = self.interactiveTransition.panGesture, transitionType == .pop else {
-            return nil
+        if fullSreenPanGesture.state == .began {
+            return interactiveTransition
         }
         
-        return interactiveTransition
+        return nil
         
     }
     
