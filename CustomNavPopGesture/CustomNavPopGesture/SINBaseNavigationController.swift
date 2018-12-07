@@ -45,17 +45,19 @@ class SINBaseNavigationController: UINavigationController {
         return transition
     }()
     
+    deinit {
+//        NotificationCenter.default.removeObserver(self, name: NSNotification.Name("navigationTransitionCompleted"), object: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationBar.isHidden = true
-        self.view.backgroundColor = UIColor.cyan
-//        self.interactivePopGestureRecognizer!.delegate = nil
         
         self.delegate = self
         
-        self.interactivePopGestureRecognizer?.isEnabled = false
         
+        ///禁用系统自带的边缘侧滑返回手势
         for ges in self.view.gestureRecognizers! {
             if let g = ges as? UIScreenEdgePanGestureRecognizer {
                 g.isEnabled = false
@@ -64,24 +66,43 @@ class SINBaseNavigationController: UINavigationController {
         
         fullSreenPanGesture = UIPanGestureRecognizer(target: self, action: #selector(panForPopAction(_:)))
         self.view.addGestureRecognizer(fullSreenPanGesture)
+//        fullSreenPanGesture.isEnabled = false  //导航控制器栈只有一个viewcontroller时禁止手势
+        
+        
+//        NotificationCenter.default.addObserver(self, selector: #selector(transitionCompletionNotification(_:)), name: NSNotification.Name(rawValue: "navigationTransitionCompleted"), object: nil)
         
     }
     
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
         viewController.hidesBottomBarWhenPushed = true
         super.pushViewController(viewController, animated: animated)
+        
+//        if viewControllers.count >= 2 {
+//            if fullSreenPanGesture.isEnabled == false {
+//                fullSreenPanGesture.isEnabled = true
+//            }
+//        }
+        
     }
     
     override func popViewController(animated: Bool) -> UIViewController? {
-        return super.popViewController(animated: animated)
+        
+        let poppedVc = super.popViewController(animated: animated)
+        
+        return poppedVc
     }
     
     override func popToRootViewController(animated: Bool) -> [UIViewController]? {
-        return super.popToRootViewController(animated: animated)
+        
+        let vcs = super.popToRootViewController(animated: animated)
+        
+        return vcs
+        
     }
     
     override func popToViewController(_ viewController: UIViewController, animated: Bool) -> [UIViewController]? {
-        return super.popToViewController(viewController, animated: animated)
+        let poppedVc = super.popToViewController(viewController, animated: animated)
+        return poppedVc
     }
     
 
@@ -89,16 +110,18 @@ class SINBaseNavigationController: UINavigationController {
 
         if isHorPan {
             switch pan.state {
-            case .possible,.began:
+            case .began:
                 
                 self.interactiveTransition.panGesture = fullSreenPanGesture
                 let _ = popViewController(animated: true)
+                
             case .changed:
                 
                 break
             case .ended, .cancelled, .failed:
+                
                 self.interactiveTransition.panGesture = nil
-                break
+    
             default:
                 break
             }
@@ -106,6 +129,17 @@ class SINBaseNavigationController: UINavigationController {
             self.interactiveTransition.panGesture = nil
         }
 
+    }
+    
+    @objc private func transitionCompletionNotification(_ notification: Notification) {
+        print(viewControllers)
+//        if viewControllers.count == 1 {
+//            fullSreenPanGesture.isEnabled = false
+//        }else {
+//            if fullSreenPanGesture.isEnabled == false {
+//                fullSreenPanGesture.isEnabled = true
+//            }
+//        }
     }
     
 }
@@ -195,6 +229,11 @@ class CustomTransitionAnimation: NSObject, UIViewControllerAnimatedTransitioning
         
     }
     
+    func animationEnded(_ transitionCompleted: Bool) {
+        print("completion........")
+//        NotificationCenter.default.post(name: NSNotification.Name("navigationTransitionCompleted"), object: nil)
+    }
+    
     private func pushAnimation(using transitionContext: UIViewControllerContextTransitioning) {
 
         let containerView = transitionContext.containerView
@@ -281,12 +320,14 @@ class CustomTransitionAnimation: NSObject, UIViewControllerAnimatedTransitioning
         UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0, options: .curveLinear, animations: {
             self.dimmingView.alpha = 0
             
-            fromView.transform = CGAffineTransform(translationX: fromView.bounds.width, y: 0)
+            fromView.transform = CGAffineTransform(translationX: UIScreen.main.bounds.width, y: 0)
             
             toView.layer.transform = CATransform3DIdentity
             
             self.snapshotView?.layer.transform = CATransform3DIdentity
+            
         }) { (complete) in
+            
             tabBar?.isHidden = false
             
             self.snapshotView?.removeFromSuperview()
@@ -295,7 +336,7 @@ class CustomTransitionAnimation: NSObject, UIViewControllerAnimatedTransitioning
             
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         }
-        
+
     }
     
     private func setViewShadow(_ view: UIView) {
@@ -311,10 +352,15 @@ class CustomTransitionAnimation: NSObject, UIViewControllerAnimatedTransitioning
     
 }
 
-
 class DriveInteractiveTransition: UIPercentDrivenInteractiveTransition {
     
     var panGesture: UIPanGestureRecognizer?
+    
+    /// 交互是否已经完成
+    var isInteractiveFinished: Bool = false
+    
+    /// 交互是否取消
+    var isInteractiveCanceled: Bool = false
     
     convenience init(_ gesture: UIPanGestureRecognizer) {
         self.init()
@@ -324,26 +370,36 @@ class DriveInteractiveTransition: UIPercentDrivenInteractiveTransition {
     
     override func startInteractiveTransition(_ transitionContext: UIViewControllerContextTransitioning) {
         super.startInteractiveTransition(transitionContext)
+        isInteractiveFinished = false
+        isInteractiveCanceled = false
     }
     
     @objc private func panForInteractiveTransition(_ pan: UIPanGestureRecognizer) {
         
         let scale = percentForGesture(pan)
-//        print("percentComplete : \(percentComplete)")
-        print("scale : \(scale)")
+
         switch pan.state {
         case .changed:
-            update(scale)
+            if isInteractiveCanceled == false && isInteractiveFinished == false {
+                update(scale)
+            }
         case .ended, .failed, .cancelled:
             
             if scale <= 0.3 {
-                completionSpeed = (1 - percentComplete)*duration
-                completionCurve = .linear
-                cancel()
+                if isInteractiveFinished == false {
+                    completionSpeed = (1 - percentComplete)*duration
+                    completionCurve = .linear
+                    cancel()
+                    isInteractiveCanceled = true
+                }
             }else {
-                completionSpeed = 0.7
-                completionCurve = .easeIn
-                finish()
+                if isInteractiveCanceled == false {
+                    completionSpeed = 0.7
+                    completionCurve = .easeIn
+                    finish()
+                    isInteractiveFinished = true
+                }
+                
             }
             
         default:
@@ -357,15 +413,12 @@ class DriveInteractiveTransition: UIPercentDrivenInteractiveTransition {
         let transition = ges.translation(in: ges.view)
         
         var scale = transition.x / UIScreen.main.bounds.width
-        print(transition.x)
-
+        
         scale = scale < 0 ? 0 : scale
         
         scale = scale > 1 ? 1 : scale
         
         return scale
     }
-    
-    
-    
+
 }
