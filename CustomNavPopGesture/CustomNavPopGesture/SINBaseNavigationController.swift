@@ -17,10 +17,12 @@ let scale: CGFloat = 0.95
 let dimmingViewAlpha: CGFloat = 0.25
 
 class SINBaseNavigationController: UINavigationController {
-
-    var transitionType: Operation = .push
     
+    /// 全屏滑动pop手势 替换navigation自带的边缘侧滑手势
     var fullSreenPanGesture: UIPanGestureRecognizer!
+    
+    /// 是否正在拖拽pop
+    var isDraggingPop: Bool = false
     
     ///是否向右拖动
     private var isHorPan: Bool {
@@ -30,7 +32,7 @@ class SINBaseNavigationController: UINavigationController {
         let absX = abs(point.x)
         let absY = abs(point.y)
         
-        if absX >= absY && point.x > 0 {
+        if absX >= absY {
             return true
         }
         
@@ -40,22 +42,24 @@ class SINBaseNavigationController: UINavigationController {
     ///截取带tabBar的view
     private var snapshopView: UIView?
     
+    /// 交互转场实例
     private lazy var interactiveTransition: DriveInteractiveTransition = {
-        let transition = DriveInteractiveTransition(fullSreenPanGesture)
-        return transition
+        let driveTransition = DriveInteractiveTransition(fullSreenPanGesture)
+        return driveTransition
     }()
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name("navigationTransitionCompleted"), object: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationBar.isHidden = true
-
-//        self.interactivePopGestureRecognizer!.delegate = nil
         
         self.delegate = self
         
-        self.interactivePopGestureRecognizer?.isEnabled = false
-        
+        ///禁用系统自带的边缘侧滑返回手势
         for ges in self.view.gestureRecognizers! {
             if let g = ges as? UIScreenEdgePanGestureRecognizer {
                 g.isEnabled = false
@@ -64,6 +68,9 @@ class SINBaseNavigationController: UINavigationController {
         
         fullSreenPanGesture = UIPanGestureRecognizer(target: self, action: #selector(panForPopAction(_:)))
         self.view.addGestureRecognizer(fullSreenPanGesture)
+        fullSreenPanGesture.isEnabled = false  //导航控制器栈只有一个viewcontroller时禁止手势
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(transitionCompletionNotification(_:)), name: NSNotification.Name(rawValue: "navigationTransitionCompleted"), object: nil)
         
     }
     
@@ -73,15 +80,23 @@ class SINBaseNavigationController: UINavigationController {
     }
     
     override func popViewController(animated: Bool) -> UIViewController? {
-        return super.popViewController(animated: animated)
+
+        let poppedVc = super.popViewController(animated: animated)
+        
+        return poppedVc
     }
     
     override func popToRootViewController(animated: Bool) -> [UIViewController]? {
-        return super.popToRootViewController(animated: animated)
+        
+        let vcs = super.popToRootViewController(animated: animated)
+        
+        return vcs
+        
     }
     
     override func popToViewController(_ viewController: UIViewController, animated: Bool) -> [UIViewController]? {
-        return super.popToViewController(viewController, animated: animated)
+        let poppedVc = super.popToViewController(viewController, animated: animated)
+        return poppedVc
     }
     
 
@@ -89,23 +104,32 @@ class SINBaseNavigationController: UINavigationController {
 
         if isHorPan {
             switch pan.state {
-            case .possible,.began:
-                
-                self.interactiveTransition.panGesture = fullSreenPanGesture
-                let _ = popViewController(animated: true)
+            case .began:
+                if isDraggingPop == false {
+                    let _ = popViewController(animated: true)
+                    isDraggingPop = true
+                }
             case .changed:
                 
                 break
             case .ended, .cancelled, .failed:
-                self.interactiveTransition.panGesture = nil
-                break
+                isDraggingPop = false
             default:
                 break
             }
-        }else {
-            self.interactiveTransition.panGesture = nil
         }
 
+    }
+    
+    @objc private func transitionCompletionNotification(_ notification: Notification) {
+//        print(viewControllers)
+        if viewControllers.count == 1 {  //栈里只有一个vc 禁用手势
+            fullSreenPanGesture.isEnabled = false
+        }else {  //多于一个vc时才打开手势
+            if fullSreenPanGesture.isEnabled == false {
+                fullSreenPanGesture.isEnabled = true
+            }
+        }
     }
     
 }
@@ -122,19 +146,18 @@ extension SINBaseNavigationController: UINavigationControllerDelegate {
     
     func navigationController(_ navigationController: UINavigationController, interactionControllerFor animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
         
-        guard let _ = self.interactiveTransition.panGesture, transitionType == .pop else {
-            return nil
+        if fullSreenPanGesture.state == .began {
+            return interactiveTransition
         }
         
-        return interactiveTransition
+        return nil
         
     }
     
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
-        transitionType = operation
-        
         if operation == .push {
+            //第一次push的时候需要把截取tabBar的view做动画
             if self.viewControllers.count == 2 {
                 snapshopView = self.tabBarController?.view.snapshotView(afterScreenUpdates: false)
                 return CustomTransitionAnimation(.push, snapshopView: snapshopView)
@@ -144,6 +167,7 @@ extension SINBaseNavigationController: UINavigationControllerDelegate {
         }
         
         if operation == .pop {
+            //当pop到root vc的时候也需要在截取的tabBar的view上做动画
             if self.viewControllers.count == 1 {
                 return CustomTransitionAnimation(.pop, snapshopView: snapshopView)
             }else if self.viewControllers.count > 1 {
@@ -195,6 +219,14 @@ class CustomTransitionAnimation: NSObject, UIViewControllerAnimatedTransitioning
         
     }
     
+    func animationEnded(_ transitionCompleted: Bool) {
+//        print("completion........")
+        if transitionCompleted {
+            NotificationCenter.default.post(name: NSNotification.Name("navigationTransitionCompleted"), object: nil)
+        }
+        
+    }
+    
     private func pushAnimation(using transitionContext: UIViewControllerContextTransitioning) {
 
         let containerView = transitionContext.containerView
@@ -223,7 +255,7 @@ class CustomTransitionAnimation: NSObject, UIViewControllerAnimatedTransitioning
         
         toView.transform = CGAffineTransform(translationX: toView.bounds.width, y: 0)
         
-        UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0, options: .curveLinear, animations: {
+        UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0, options: .curveEaseOut, animations: {
             self.dimmingView.alpha = dimmingViewAlpha
             
             toView.transform = CGAffineTransform.identity
@@ -281,12 +313,14 @@ class CustomTransitionAnimation: NSObject, UIViewControllerAnimatedTransitioning
         UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0, options: .curveLinear, animations: {
             self.dimmingView.alpha = 0
             
-            fromView.transform = CGAffineTransform(translationX: fromView.bounds.width, y: 0)
+            fromView.transform = CGAffineTransform(translationX: UIScreen.main.bounds.width, y: 0)
             
             toView.layer.transform = CATransform3DIdentity
             
             self.snapshotView?.layer.transform = CATransform3DIdentity
+            
         }) { (complete) in
+            
             tabBar?.isHidden = false
             
             self.snapshotView?.removeFromSuperview()
@@ -295,7 +329,7 @@ class CustomTransitionAnimation: NSObject, UIViewControllerAnimatedTransitioning
             
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         }
-        
+
     }
     
     private func setViewShadow(_ view: UIView) {
@@ -311,10 +345,15 @@ class CustomTransitionAnimation: NSObject, UIViewControllerAnimatedTransitioning
     
 }
 
-
 class DriveInteractiveTransition: UIPercentDrivenInteractiveTransition {
     
     var panGesture: UIPanGestureRecognizer?
+    
+    /// 交互是否已经完成
+    var isInteractiveFinished: Bool = false
+    
+    /// 交互是否取消
+    var isInteractiveCanceled: Bool = false
     
     convenience init(_ gesture: UIPanGestureRecognizer) {
         self.init()
@@ -324,27 +363,38 @@ class DriveInteractiveTransition: UIPercentDrivenInteractiveTransition {
     
     override func startInteractiveTransition(_ transitionContext: UIViewControllerContextTransitioning) {
         super.startInteractiveTransition(transitionContext)
-        completionSpeed = (1 - percentComplete)*duration
-        completionCurve = .easeIn
+        isInteractiveFinished = false
+        isInteractiveCanceled = false
     }
     
     @objc private func panForInteractiveTransition(_ pan: UIPanGestureRecognizer) {
         
         let scale = percentForGesture(pan)
-//        print("percentComplete : \(percentComplete)")
-        print("scale : \(scale)")
-        switch pan.state {
-        case .began, .possible, .changed:
-            update(scale)
-        case .ended:
-            
-            if scale < 0.3 {
-                cancel()
-            }else {
-                completionSpeed = 0.7
-                finish()
-            }
 
+        switch pan.state {
+        case .changed:
+            if isInteractiveCanceled == false && isInteractiveFinished == false {
+                update(scale)
+            }
+        case .ended, .failed, .cancelled:
+            
+            if scale <= 0.3 {
+                if isInteractiveFinished == false {
+                    completionSpeed = (1 - percentComplete)*duration
+                    completionCurve = .easeInOut
+                    cancel()
+                    isInteractiveCanceled = true
+                }
+            }else {
+                if isInteractiveCanceled == false {
+                    completionSpeed = 0.7
+                    completionCurve = .easeInOut
+                    finish()
+                    isInteractiveFinished = true
+                }
+                
+            }
+            
         default:
             break
         }
@@ -356,15 +406,12 @@ class DriveInteractiveTransition: UIPercentDrivenInteractiveTransition {
         let transition = ges.translation(in: ges.view)
         
         var scale = transition.x / UIScreen.main.bounds.width
-        print(transition.x)
-
+        
         scale = scale < 0 ? 0 : scale
         
         scale = scale > 1 ? 1 : scale
         
         return scale
     }
-    
-    
-    
+
 }
