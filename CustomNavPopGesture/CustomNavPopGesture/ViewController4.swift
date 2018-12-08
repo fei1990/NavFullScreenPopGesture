@@ -20,7 +20,15 @@ class ViewController4: UIViewController {
     
 
     @IBAction func popAction(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true)
+//        self.navigationController?.popViewController(animated: true)
+        
+        for vc in (self.navigationController?.viewControllers)! {
+            if let v = vc as? ViewController {
+                self.navigationController?.popToViewController(v, animated: true)
+            }
+        }
+        
+//        self.navigationController?.popToRootViewController(animated: true)
     }
     
 

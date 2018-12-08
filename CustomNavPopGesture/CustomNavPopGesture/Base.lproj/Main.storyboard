@@ -186,6 +186,9 @@
                                 <rect key="frame" x="143" y="209" width="95" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="push"/>
+                                <connections>
+                                    <segue destination="jsf-xH-XDY" kind="show" id="6Ba-5l-73f"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lhj-bT-FOp">
                                 <rect key="frame" x="143" y="381" width="95" height="30"/>

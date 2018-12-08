@@ -17,10 +17,12 @@ let scale: CGFloat = 0.95
 let dimmingViewAlpha: CGFloat = 0.25
 
 class SINBaseNavigationController: UINavigationController {
-
-    var transitionType: Operation = .push
     
+    /// 全屏滑动pop手势 替换navigation自带的边缘侧滑手势
     var fullSreenPanGesture: UIPanGestureRecognizer!
+    
+    /// 是否正在拖拽pop
+    var isDraggingPop: Bool = false
     
     ///是否向右拖动
     private var isHorPan: Bool {
@@ -40,13 +42,14 @@ class SINBaseNavigationController: UINavigationController {
     ///截取带tabBar的view
     private var snapshopView: UIView?
     
+    /// 交互转场实例
     private lazy var interactiveTransition: DriveInteractiveTransition = {
         let driveTransition = DriveInteractiveTransition(fullSreenPanGesture)
         return driveTransition
     }()
     
     deinit {
-//        NotificationCenter.default.removeObserver(self, name: NSNotification.Name("navigationTransitionCompleted"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name("navigationTransitionCompleted"), object: nil)
     }
     
     override func viewDidLoad() {
@@ -55,7 +58,6 @@ class SINBaseNavigationController: UINavigationController {
         self.navigationBar.isHidden = true
         
         self.delegate = self
-        
         
         ///禁用系统自带的边缘侧滑返回手势
         for ges in self.view.gestureRecognizers! {
@@ -66,27 +68,19 @@ class SINBaseNavigationController: UINavigationController {
         
         fullSreenPanGesture = UIPanGestureRecognizer(target: self, action: #selector(panForPopAction(_:)))
         self.view.addGestureRecognizer(fullSreenPanGesture)
-//        fullSreenPanGesture.isEnabled = false  //导航控制器栈只有一个viewcontroller时禁止手势
+        fullSreenPanGesture.isEnabled = false  //导航控制器栈只有一个viewcontroller时禁止手势
         
-        
-//        NotificationCenter.default.addObserver(self, selector: #selector(transitionCompletionNotification(_:)), name: NSNotification.Name(rawValue: "navigationTransitionCompleted"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(transitionCompletionNotification(_:)), name: NSNotification.Name(rawValue: "navigationTransitionCompleted"), object: nil)
         
     }
     
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
         viewController.hidesBottomBarWhenPushed = true
         super.pushViewController(viewController, animated: animated)
-        
-//        if viewControllers.count >= 2 {
-//            if fullSreenPanGesture.isEnabled == false {
-//                fullSreenPanGesture.isEnabled = true
-//            }
-//        }
-        
     }
     
     override func popViewController(animated: Bool) -> UIViewController? {
-        
+
         let poppedVc = super.popViewController(animated: animated)
         
         return poppedVc
@@ -111,35 +105,31 @@ class SINBaseNavigationController: UINavigationController {
         if isHorPan {
             switch pan.state {
             case .began:
-                
-                self.interactiveTransition.panGesture = fullSreenPanGesture
-                let _ = popViewController(animated: true)
-                
+                if isDraggingPop == false {
+                    let _ = popViewController(animated: true)
+                    isDraggingPop = true
+                }
             case .changed:
                 
                 break
             case .ended, .cancelled, .failed:
-                
-                self.interactiveTransition.panGesture = nil
-    
+                isDraggingPop = false
             default:
                 break
             }
-        }else {
-            self.interactiveTransition.panGesture = nil
         }
 
     }
     
     @objc private func transitionCompletionNotification(_ notification: Notification) {
-        print(viewControllers)
-//        if viewControllers.count == 1 {
-//            fullSreenPanGesture.isEnabled = false
-//        }else {
-//            if fullSreenPanGesture.isEnabled == false {
-//                fullSreenPanGesture.isEnabled = true
-//            }
-//        }
+//        print(viewControllers)
+        if viewControllers.count == 1 {  //栈里只有一个vc 禁用手势
+            fullSreenPanGesture.isEnabled = false
+        }else {  //多于一个vc时才打开手势
+            if fullSreenPanGesture.isEnabled == false {
+                fullSreenPanGesture.isEnabled = true
+            }
+        }
     }
     
 }
@@ -166,9 +156,8 @@ extension SINBaseNavigationController: UINavigationControllerDelegate {
     
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
-        transitionType = operation
-        
         if operation == .push {
+            //第一次push的时候需要把截取tabBar的view做动画
             if self.viewControllers.count == 2 {
                 snapshopView = self.tabBarController?.view.snapshotView(afterScreenUpdates: false)
                 return CustomTransitionAnimation(.push, snapshopView: snapshopView)
@@ -178,6 +167,7 @@ extension SINBaseNavigationController: UINavigationControllerDelegate {
         }
         
         if operation == .pop {
+            //当pop到root vc的时候也需要在截取的tabBar的view上做动画
             if self.viewControllers.count == 1 {
                 return CustomTransitionAnimation(.pop, snapshopView: snapshopView)
             }else if self.viewControllers.count > 1 {
@@ -230,8 +220,8 @@ class CustomTransitionAnimation: NSObject, UIViewControllerAnimatedTransitioning
     }
     
     func animationEnded(_ transitionCompleted: Bool) {
-        print("completion........")
-//        NotificationCenter.default.post(name: NSNotification.Name("navigationTransitionCompleted"), object: nil)
+//        print("completion........")
+        NotificationCenter.default.post(name: NSNotification.Name("navigationTransitionCompleted"), object: nil)
     }
     
     private func pushAnimation(using transitionContext: UIViewControllerContextTransitioning) {
