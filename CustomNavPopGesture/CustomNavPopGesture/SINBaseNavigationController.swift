@@ -221,7 +221,10 @@ class CustomTransitionAnimation: NSObject, UIViewControllerAnimatedTransitioning
     
     func animationEnded(_ transitionCompleted: Bool) {
 //        print("completion........")
-        NotificationCenter.default.post(name: NSNotification.Name("navigationTransitionCompleted"), object: nil)
+        if transitionCompleted {
+            NotificationCenter.default.post(name: NSNotification.Name("navigationTransitionCompleted"), object: nil)
+        }
+        
     }
     
     private func pushAnimation(using transitionContext: UIViewControllerContextTransitioning) {
@@ -252,7 +255,7 @@ class CustomTransitionAnimation: NSObject, UIViewControllerAnimatedTransitioning
         
         toView.transform = CGAffineTransform(translationX: toView.bounds.width, y: 0)
         
-        UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0, options: .curveLinear, animations: {
+        UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0, options: .curveEaseOut, animations: {
             self.dimmingView.alpha = dimmingViewAlpha
             
             toView.transform = CGAffineTransform.identity
@@ -378,14 +381,14 @@ class DriveInteractiveTransition: UIPercentDrivenInteractiveTransition {
             if scale <= 0.3 {
                 if isInteractiveFinished == false {
                     completionSpeed = (1 - percentComplete)*duration
-                    completionCurve = .linear
+                    completionCurve = .easeInOut
                     cancel()
                     isInteractiveCanceled = true
                 }
             }else {
                 if isInteractiveCanceled == false {
                     completionSpeed = 0.7
-                    completionCurve = .easeIn
+                    completionCurve = .easeInOut
                     finish()
                     isInteractiveFinished = true
                 }
