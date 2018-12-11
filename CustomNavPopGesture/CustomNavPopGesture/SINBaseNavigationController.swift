@@ -347,13 +347,17 @@ class CustomTransitionAnimation: NSObject, UIViewControllerAnimatedTransitioning
 
 class DriveInteractiveTransition: UIPercentDrivenInteractiveTransition {
     
-    var panGesture: UIPanGestureRecognizer?
+    private var panGesture: UIPanGestureRecognizer?
     
     /// 交互是否已经完成
-    var isInteractiveFinished: Bool = false
+    private var isInteractiveFinished: Bool = false
     
     /// 交互是否取消
-    var isInteractiveCanceled: Bool = false
+    private var isInteractiveCanceled: Bool = false
+    
+    private var start: CFAbsoluteTime = 0
+    
+    private var end: CFAbsoluteTime = 0
     
     convenience init(_ gesture: UIPanGestureRecognizer) {
         self.init()
@@ -365,6 +369,7 @@ class DriveInteractiveTransition: UIPercentDrivenInteractiveTransition {
         super.startInteractiveTransition(transitionContext)
         isInteractiveFinished = false
         isInteractiveCanceled = false
+        start = CFAbsoluteTimeGetCurrent()
     }
     
     @objc private func panForInteractiveTransition(_ pan: UIPanGestureRecognizer) {
@@ -372,29 +377,40 @@ class DriveInteractiveTransition: UIPercentDrivenInteractiveTransition {
         let scale = percentForGesture(pan)
 
         switch pan.state {
+        case .began:
+            
+            break
         case .changed:
             if isInteractiveCanceled == false && isInteractiveFinished == false {
                 update(scale)
             }
         case .ended, .failed, .cancelled:
-            
-            if scale <= 0.3 {
-                if isInteractiveFinished == false {
-                    completionSpeed = (1 - percentComplete)*duration
-                    completionCurve = .easeInOut
-                    cancel()
-                    isInteractiveCanceled = true
-                }
-            }else {
+            end = CFAbsoluteTimeGetCurrent()
+            if (end - start) * 1000 <= 68 {
                 if isInteractiveCanceled == false {
                     completionSpeed = 0.7
                     completionCurve = .easeInOut
                     finish()
                     isInteractiveFinished = true
                 }
-                
+            }else {
+                if scale <= 0.3 {
+                    if isInteractiveFinished == false {
+                        completionSpeed = (1 - percentComplete)*duration
+                        completionCurve = .easeInOut
+                        cancel()
+                        isInteractiveCanceled = true
+                    }
+                }else {
+                    if isInteractiveCanceled == false {
+                        completionSpeed = 0.7
+                        completionCurve = .easeInOut
+                        finish()
+                        isInteractiveFinished = true
+                    }
+                }
             }
-            
+
         default:
             break
         }
