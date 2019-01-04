@@ -40,7 +40,9 @@ class SINBaseNavigationController: UINavigationController {
     }
     
     ///截取带tabBar的view
-    private var snapshopView: UIView?
+    private var snapshopView: UIImageView = {
+        return UIImageView(frame: CGRect(x: 0, y: UIScreen.main.bounds.height - 84, width: UIScreen.main.bounds.width, height: 84))
+    }()
     
     /// 交互转场实例
     private lazy var interactiveTransition: DriveInteractiveTransition = {
@@ -72,15 +74,37 @@ class SINBaseNavigationController: UINavigationController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(transitionCompletionNotification(_:)), name: NSNotification.Name(rawValue: "navigationTransitionCompleted"), object: nil)
         
+        
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+    }
+    
     
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
         viewController.hidesBottomBarWhenPushed = true
+        
+        if self.viewControllers.count == 1 {
+            if let tabView = self.tabBarController?.view {
+                let img = generateSnapView(tabView)
+                snapshopView.image = generateImage(img)
+            }
+        }
+        
         super.pushViewController(viewController, animated: animated)
     }
     
     override func popViewController(animated: Bool) -> UIViewController? {
 
+        if self.viewControllers.count == 2 {
+            if let tabView = self.tabBarController?.view {
+                let img = generateSnapView(tabView)
+                snapshopView.image = generateImage(img)
+            }
+        }
+        
         let poppedVc = super.popViewController(animated: animated)
         
         return poppedVc
@@ -159,7 +183,8 @@ extension SINBaseNavigationController: UINavigationControllerDelegate {
         if operation == .push {
             //第一次push的时候需要把截取tabBar的view做动画
             if self.viewControllers.count == 2 {
-                snapshopView = self.tabBarController?.view.snapshotView(afterScreenUpdates: false)
+//                snapshopView = self.tabBarController?.view.snapshotView(afterScreenUpdates: false)
+                
                 return CustomTransitionAnimation(.push, snapshopView: snapshopView)
             }else {
                 return CustomTransitionAnimation(.push)
@@ -179,6 +204,37 @@ extension SINBaseNavigationController: UINavigationControllerDelegate {
         
         return nil
         
+    }
+    
+    private func generateSnapView(_ view: UIView) -> UIImage {
+        
+        UIGraphicsBeginImageContextWithOptions(UIScreen.main.bounds.size, false, UIScreen.main.scale)
+        
+        view.layer.render(in: UIGraphicsGetCurrentContext()!)
+        
+        let snapImg = UIGraphicsGetImageFromCurrentImageContext()
+        
+        UIGraphicsEndImageContext()
+        
+        return snapImg!
+        
+    }
+    
+    private func generateImage(_ image: UIImage) -> UIImage {
+        
+        //输出尺寸
+        let outputRect = CGRect(x: 0, y: UIScreen.main.bounds.height - 84, width: UIScreen.main.bounds.width, height: 84)
+        
+        //开始图片处理上下文（由于输出的图不会进行缩放，所以缩放因子等于屏幕的scale即可）
+        UIGraphicsBeginImageContextWithOptions(outputRect.size, false, UIScreen.main.scale)
+        let context = UIGraphicsGetCurrentContext()!
+        //添加裁剪区域
+        context.addRect(outputRect)
+        context.clip()
+        //获得处理后的图片
+        let maskedImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return maskedImage
     }
     
 }
