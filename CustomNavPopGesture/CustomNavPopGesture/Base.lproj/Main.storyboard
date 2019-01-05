@@ -272,7 +272,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="pop"/>
                                 <connections>
-                                    <action selector="popAction:" destination="jsf-xH-XDY" eventType="touchUpInside" id="9Uu-jT-hiK"/>
+                                    <action selector="popAction:" destination="jsf-xH-XDY" eventType="touchUpInside" id="KsZ-oc-9QH"/>
                                 </connections>
                             </button>
                         </subviews>

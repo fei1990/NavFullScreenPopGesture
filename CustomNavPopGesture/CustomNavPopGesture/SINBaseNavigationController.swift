@@ -50,10 +50,6 @@ class SINBaseNavigationController: UINavigationController {
         return driveTransition
     }()
     
-    deinit {
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name("navigationTransitionCompleted"), object: nil)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -71,8 +67,6 @@ class SINBaseNavigationController: UINavigationController {
         fullSreenPanGesture = UIPanGestureRecognizer(target: self, action: #selector(panForPopAction(_:)))
         self.view.addGestureRecognizer(fullSreenPanGesture)
         fullSreenPanGesture.isEnabled = false  //导航控制器栈只有一个viewcontroller时禁止手势
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(transitionCompletionNotification(_:)), name: NSNotification.Name(rawValue: "navigationTransitionCompleted"), object: nil)
         
     }
     
@@ -131,15 +125,27 @@ class SINBaseNavigationController: UINavigationController {
 
     }
     
-    @objc private func transitionCompletionNotification(_ notification: Notification) {
-//        print(viewControllers)
-        if viewControllers.count == 1 {  //栈里只有一个vc 禁用手势
-            fullSreenPanGesture.isEnabled = false
-        }else {  //多于一个vc时才打开手势
-            if fullSreenPanGesture.isEnabled == false {
-                fullSreenPanGesture.isEnabled = true
-            }
-        }
+    ///截取tabBar
+    private func getCurrentInnerViewShot(_ view: UIView) -> UIImage? {
+        
+        //输出尺寸
+        let outputRect = CGRect(x: 0, y: UIScreen.main.bounds.height - 84, width: UIScreen.main.bounds.width, height: 84)
+        
+        UIGraphicsBeginImageContextWithOptions(view.frame.size, false, UIScreen.main.scale)
+        
+        let context = UIGraphicsGetCurrentContext()
+        
+        context?.saveGState()
+        
+        context?.clip(to: outputRect)
+        
+        view.layer.render(in: context!)
+        
+        let finalImage = UIGraphicsGetImageFromCurrentImageContext()
+        
+        UIGraphicsEndImageContext()
+        
+        return finalImage
     }
     
 }
@@ -169,18 +175,18 @@ extension SINBaseNavigationController: UINavigationControllerDelegate {
         if operation == .push {
             //第一次push的时候需要把截取tabBar的view做动画
             if self.viewControllers.count == 2 {
-                return CustomTransitionAnimation(.push, snapshopView: snapshotView)
+                return CustomTransitionAnimation(.push, navigationVc: self, snapshopView: snapshotView)
             }else {
-                return CustomTransitionAnimation(.push)
+                return CustomTransitionAnimation(.push, navigationVc: self)
             }
         }
         
         if operation == .pop {
             //当pop到root vc的时候也需要在截取的tabBar的view上做动画
             if self.viewControllers.count == 1 {
-                return CustomTransitionAnimation(.pop, snapshopView: snapshotView)
+                return CustomTransitionAnimation(.pop, navigationVc: self, snapshopView: snapshotView)
             }else if self.viewControllers.count > 1 {
-                return CustomTransitionAnimation(.pop)
+                return CustomTransitionAnimation(.pop, navigationVc: self)
             }else {
                 return nil
             }
@@ -188,28 +194,6 @@ extension SINBaseNavigationController: UINavigationControllerDelegate {
         
         return nil
         
-    }
-    
-    private func getCurrentInnerViewShot(_ view: UIView) -> UIImage {
-        
-        //输出尺寸
-        let outputRect = CGRect(x: 0, y: UIScreen.main.bounds.height - 84, width: UIScreen.main.bounds.width, height: 84)
-        
-        UIGraphicsBeginImageContextWithOptions(view.frame.size, false, UIScreen.main.scale)
-        
-        let context = UIGraphicsGetCurrentContext()
-        
-        context?.saveGState()
-        
-        context?.clip(to: outputRect)
-        
-        view.layer.render(in: context!)
-        
-        let finalImage = UIGraphicsGetImageFromCurrentImageContext()
-        
-        UIGraphicsEndImageContext()
-        
-        return finalImage!
     }
     
 }
@@ -227,11 +211,14 @@ class CustomTransitionAnimation: NSObject, UIViewControllerAnimatedTransitioning
     
     var snapshotView: UIView?
     
+    var navigationViewController: SINBaseNavigationController!
     
-    convenience init(_ transitionType: TransitionType, snapshopView: UIView? = nil) {
+    
+    convenience init(_ transitionType: TransitionType, navigationVc: SINBaseNavigationController, snapshopView: UIView? = nil) {
         self.init()
         operation = transitionType
         self.snapshotView = snapshopView
+        navigationViewController = navigationVc
     }
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
@@ -251,9 +238,13 @@ class CustomTransitionAnimation: NSObject, UIViewControllerAnimatedTransitioning
     }
     
     func animationEnded(_ transitionCompleted: Bool) {
-//        print("completion........")
-        if transitionCompleted {
-            NotificationCenter.default.post(name: NSNotification.Name("navigationTransitionCompleted"), object: nil)
+        
+        if navigationViewController.viewControllers.count == 1 {  //栈里只有一个vc 禁用手势
+            navigationViewController.fullSreenPanGesture.isEnabled = false
+        }else {  //多于一个vc时才打开手势
+            if navigationViewController.fullSreenPanGesture.isEnabled == false {
+                navigationViewController.fullSreenPanGesture.isEnabled = true
+            }
         }
         
     }
@@ -370,10 +361,6 @@ class CustomTransitionAnimation: NSObject, UIViewControllerAnimatedTransitioning
         view.layer.shadowOffset = CGSize(width: -2, height: 0)
         view.layer.shadowOpacity = 0.5
         view.layer.shadowPath = UIBezierPath(rect: view.bounds).cgPath
-    }
-    
-    private func navigationControllerSnapshotView(with viewController: UIViewController) -> UIView? {
-        return viewController.navigationController?.view.snapshotView(afterScreenUpdates: false)
     }
     
 }
