@@ -40,8 +40,8 @@ class SINBaseNavigationController: UINavigationController {
     }
     
     ///截取带tabBar的view
-    private var snapshopView: UIImageView = {
-        return UIImageView(frame: CGRect(x: 0, y: UIScreen.main.bounds.height - 84, width: UIScreen.main.bounds.width, height: 84))
+    lazy private var snapshotView: UIImageView = {
+        return UIImageView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
     }()
     
     /// 交互转场实例
@@ -74,22 +74,15 @@ class SINBaseNavigationController: UINavigationController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(transitionCompletionNotification(_:)), name: NSNotification.Name(rawValue: "navigationTransitionCompleted"), object: nil)
         
-        
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-    }
-    
     
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
         viewController.hidesBottomBarWhenPushed = true
         
         if self.viewControllers.count == 1 {
             if let tabView = self.tabBarController?.view {
-                let img = generateSnapView(tabView)
-                snapshopView.image = generateImage(img)
+                let img = getCurrentInnerViewShot(tabView)
+                snapshotView.image = img
             }
         }
         
@@ -97,13 +90,6 @@ class SINBaseNavigationController: UINavigationController {
     }
     
     override func popViewController(animated: Bool) -> UIViewController? {
-
-        if self.viewControllers.count == 2 {
-            if let tabView = self.tabBarController?.view {
-                let img = generateSnapView(tabView)
-                snapshopView.image = generateImage(img)
-            }
-        }
         
         let poppedVc = super.popViewController(animated: animated)
         
@@ -183,9 +169,7 @@ extension SINBaseNavigationController: UINavigationControllerDelegate {
         if operation == .push {
             //第一次push的时候需要把截取tabBar的view做动画
             if self.viewControllers.count == 2 {
-//                snapshopView = self.tabBarController?.view.snapshotView(afterScreenUpdates: false)
-                
-                return CustomTransitionAnimation(.push, snapshopView: snapshopView)
+                return CustomTransitionAnimation(.push, snapshopView: snapshotView)
             }else {
                 return CustomTransitionAnimation(.push)
             }
@@ -194,7 +178,7 @@ extension SINBaseNavigationController: UINavigationControllerDelegate {
         if operation == .pop {
             //当pop到root vc的时候也需要在截取的tabBar的view上做动画
             if self.viewControllers.count == 1 {
-                return CustomTransitionAnimation(.pop, snapshopView: snapshopView)
+                return CustomTransitionAnimation(.pop, snapshopView: snapshotView)
             }else if self.viewControllers.count > 1 {
                 return CustomTransitionAnimation(.pop)
             }else {
@@ -206,35 +190,26 @@ extension SINBaseNavigationController: UINavigationControllerDelegate {
         
     }
     
-    private func generateSnapView(_ view: UIView) -> UIImage {
-        
-        UIGraphicsBeginImageContextWithOptions(UIScreen.main.bounds.size, false, UIScreen.main.scale)
-        
-        view.layer.render(in: UIGraphicsGetCurrentContext()!)
-        
-        let snapImg = UIGraphicsGetImageFromCurrentImageContext()
-        
-        UIGraphicsEndImageContext()
-        
-        return snapImg!
-        
-    }
-    
-    private func generateImage(_ image: UIImage) -> UIImage {
+    private func getCurrentInnerViewShot(_ view: UIView) -> UIImage {
         
         //输出尺寸
         let outputRect = CGRect(x: 0, y: UIScreen.main.bounds.height - 84, width: UIScreen.main.bounds.width, height: 84)
         
-        //开始图片处理上下文（由于输出的图不会进行缩放，所以缩放因子等于屏幕的scale即可）
-        UIGraphicsBeginImageContextWithOptions(outputRect.size, false, UIScreen.main.scale)
-        let context = UIGraphicsGetCurrentContext()!
-        //添加裁剪区域
-        context.addRect(outputRect)
-        context.clip()
-        //获得处理后的图片
-        let maskedImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsBeginImageContextWithOptions(view.frame.size, false, UIScreen.main.scale)
+        
+        let context = UIGraphicsGetCurrentContext()
+        
+        context?.saveGState()
+        
+        context?.clip(to: outputRect)
+        
+        view.layer.render(in: context!)
+        
+        let finalImage = UIGraphicsGetImageFromCurrentImageContext()
+        
         UIGraphicsEndImageContext()
-        return maskedImage
+        
+        return finalImage!
     }
     
 }
@@ -321,6 +296,8 @@ class CustomTransitionAnimation: NSObject, UIViewControllerAnimatedTransitioning
             self.snapshotView?.layer.transform = CATransform3DMakeScale(scale, scale, scale)
         }) { (complete) in
             tabBar?.isHidden = false
+            
+            self.snapshotView?.layer.transform = CATransform3DIdentity
             
             self.snapshotView?.removeFromSuperview()
             

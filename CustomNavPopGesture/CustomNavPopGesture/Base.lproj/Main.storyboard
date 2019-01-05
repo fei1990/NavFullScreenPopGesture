@@ -22,6 +22,7 @@
                     <connections>
                         <segue destination="jlF-TX-nfc" kind="relationship" relationship="viewControllers" id="E3l-bn-SUz"/>
                         <segue destination="IYn-OY-3b7" kind="relationship" relationship="viewControllers" id="043-vf-0Dk"/>
+                        <segue destination="suC-t6-0ga" kind="relationship" relationship="viewControllers" id="UQs-zK-7G0"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Iu6-lp-DPf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -176,10 +177,11 @@
             </objects>
             <point key="canvasLocation" x="42" y="434"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Item-->
         <scene sceneID="JhN-7G-ahl">
             <objects>
                 <navigationController id="suC-t6-0ga" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="nER-A6-r7m"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="PLB-wQ-NnJ">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
