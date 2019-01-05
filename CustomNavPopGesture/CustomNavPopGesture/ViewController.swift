@@ -9,9 +9,12 @@
 import UIKit
 
 class ViewController: UIViewController {
-
     
-    var ff = fff()
+//    var ff = fff()
+    
+//    lazy private var imgView: UIImageView = {
+//        return UIImageView()
+//    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +23,6 @@ class ViewController: UIViewController {
         lbl.text = "fdsfjdsfjldsjfldsf"
         lbl.backgroundColor = UIColor.cyan
         self.view.addSubview(lbl)
-        
         
 //        let btn = UIButton.init(type: .system)
 //        btn.setTitle("push", for: .normal)
@@ -39,25 +41,25 @@ class ViewController: UIViewController {
     
 }
 
-class fff: NSObject, UINavigationControllerDelegate {
-    
-    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-//        if operation == .push {
-//            return qq()
-//        }
-        return nil
-    }
-    
-}
-
-class qq: NSObject, UIViewControllerAnimatedTransitioning {
-    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        
-        return 0.3
-    }
-    
-    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        
-        
-    }
-}
+//class fff: NSObject, UINavigationControllerDelegate {
+//
+//    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+////        if operation == .push {
+////            return qq()
+////        }
+//        return nil
+//    }
+//
+//}
+//
+//class qq: NSObject, UIViewControllerAnimatedTransitioning {
+//    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+//
+//        return 0.3
+//    }
+//
+//    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+//
+//
+//    }
+//}
