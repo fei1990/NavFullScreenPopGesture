@@ -406,10 +406,10 @@ class DriveInteractiveTransition: UIPercentDrivenInteractiveTransition {
             }
         case .ended, .failed, .cancelled:
             end = CFAbsoluteTimeGetCurrent()
-            if (end - start) * 1000 <= 68 {
+            if (end - start) * 1000 <= 100 {
                 if isInteractiveCanceled == false {
-                    completionSpeed = 0.7
-                    completionCurve = .easeInOut
+                    completionSpeed = 1.2
+                    completionCurve = .linear
                     finish()
                     isInteractiveFinished = true
                 }
@@ -417,14 +417,14 @@ class DriveInteractiveTransition: UIPercentDrivenInteractiveTransition {
                 if scale <= 0.3 {
                     if isInteractiveFinished == false {
                         completionSpeed = (1 - percentComplete)*duration
-                        completionCurve = .easeInOut
+                        completionCurve = .linear
                         cancel()
                         isInteractiveCanceled = true
                     }
                 }else {
                     if isInteractiveCanceled == false {
-                        completionSpeed = 0.7
-                        completionCurve = .easeInOut
+                        completionSpeed = 1.2
+                        completionCurve = .linear
                         finish()
                         isInteractiveFinished = true
                     }
