@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B6259C9421EC9539005F0BA2 /* SINBaseTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6259C9321EC9539005F0BA2 /* SINBaseTabBar.swift */; };
+		B6CF4A6421E5986000DC24C8 /* SINBaseTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CF4A6321E5986000DC24C8 /* SINBaseTabBarViewController.swift */; };
 		B6CFFA2721B7A50B00EDC224 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CFFA2621B7A50B00EDC224 /* AppDelegate.swift */; };
 		B6CFFA2921B7A50B00EDC224 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CFFA2821B7A50B00EDC224 /* ViewController.swift */; };
 		B6CFFA2C21B7A50B00EDC224 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6CFFA2A21B7A50B00EDC224 /* Main.storyboard */; };
@@ -40,6 +42,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B6259C9321EC9539005F0BA2 /* SINBaseTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SINBaseTabBar.swift; sourceTree = "<group>"; };
+		B6CF4A6321E5986000DC24C8 /* SINBaseTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SINBaseTabBarViewController.swift; sourceTree = "<group>"; };
 		B6CFFA2321B7A50B00EDC224 /* CustomNavPopGesture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CustomNavPopGesture.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6CFFA2621B7A50B00EDC224 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B6CFFA2821B7A50B00EDC224 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -117,6 +121,8 @@
 				B6CFFA5C21B7E02A00EDC224 /* ViewController4.swift */,
 				B6CFFA5E21B7E03A00EDC224 /* ViewController5.swift */,
 				B6CFFA5621B7A74B00EDC224 /* SINBaseNavigationController.swift */,
+				B6CF4A6321E5986000DC24C8 /* SINBaseTabBarViewController.swift */,
+				B6259C9321EC9539005F0BA2 /* SINBaseTabBar.swift */,
 				B6CFFA2A21B7A50B00EDC224 /* Main.storyboard */,
 				B6CFFA2D21B7A50C00EDC224 /* Assets.xcassets */,
 				B6CFFA2F21B7A50C00EDC224 /* LaunchScreen.storyboard */,
@@ -274,12 +280,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6CF4A6421E5986000DC24C8 /* SINBaseTabBarViewController.swift in Sources */,
 				B6CFFA5921B7C6C300EDC224 /* ViewController2.swift in Sources */,
 				B6CFFA5D21B7E02A00EDC224 /* ViewController4.swift in Sources */,
 				B6CFFA5521B7A6BA00EDC224 /* ViewController1.swift in Sources */,
 				B6CFFA5B21B7C6CC00EDC224 /* ViewController3.swift in Sources */,
 				B6CFFA5F21B7E03A00EDC224 /* ViewController5.swift in Sources */,
 				B6CFFA2921B7A50B00EDC224 /* ViewController.swift in Sources */,
+				B6259C9421EC9539005F0BA2 /* SINBaseTabBar.swift in Sources */,
 				B6CFFA2721B7A50B00EDC224 /* AppDelegate.swift in Sources */,
 				B6CFFA5721B7A74B00EDC224 /* SINBaseNavigationController.swift in Sources */,
 			);

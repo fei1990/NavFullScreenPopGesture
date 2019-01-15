@@ -31,10 +31,18 @@ class ViewController: UIViewController {
 //        btn.addTarget(self, action: #selector(btnAction(_:)), for: .touchUpInside)
 //        self.view.addSubview(btn)
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+    }
 
 
     @objc private func btnAction(_ btn: UIButton) {
-//        self.navigationController?.delegate = self.navigationController as? SINBaseNavigationController
         let vc2 = ViewController2()
         self.navigationController?.pushViewController(vc2, animated: true)
     }
